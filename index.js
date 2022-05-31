@@ -8,11 +8,11 @@ import bodyParser from 'body-parser'
 import mongoose from "mongoose";
 
 // connect ro db (MongoDB)
-main().catch(err => console.log(err))
-
-async function main() {
-    await mongoose.connect('mongodb://localhost:27017/patients');
-}
+// main().catch(err => console.log(err))
+//
+// async function main() {
+//     await mongoose.connect('mongodb://localhost:27017/patients');
+// }
 
 // params
 const port = 7500
