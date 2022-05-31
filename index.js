@@ -5,9 +5,8 @@ import express from 'express'
 import cors from 'cors'
 import users from "./usersRouter.js";
 import bodyParser from 'body-parser'
-import mongoose from "mongoose";
 
-// connect ro db (MongoDB)
+// connect ro database (MongoDB)
 // main().catch(err => console.log(err))
 //
 // async function main() {
@@ -16,7 +15,7 @@ import mongoose from "mongoose";
 
 // params
 dotenv.config()
-const port = process.env.PORT
+const port = process.env.PORT || 8888
 const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
