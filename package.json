@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "chalk": "^4.1.2",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "env": "^0.0.2",
+    "express": "^4.18.1",
+    "heroku": "^7.60.2",
+    "mongoose": "^6.3.4",
+    "moongoose": "^0.0.5",
+    "node-env-file": "^0.1.8"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js --inspect"
+  },
+  "type": "module",
+  "name": "rg-helper-server",
+  "version": "1.0.0",
+  "description": "Rg-helper Server",
+  "main": "index.js",
+  "author": "Eugene Pashkevich <marinadegames@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
