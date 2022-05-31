@@ -15,11 +15,11 @@ import mongoose from "mongoose";
 // }
 
 // params
-const port = 7500
+dotenv.config()
+const port = process.env.PORT
 const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-dotenv.config()
 app.use(cors())
 
 // routers

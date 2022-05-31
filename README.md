@@ -1,9 +1,10 @@
-# 👨‍⚕️ Nodejs-server from Rg-helper app ☢️
+# 👨‍⚕️ Nodejs-server from Rg-helper app ☢️   
 
-### 💜 HEROKU LINK: https://rg-helper-back.herokuapp.com/
-### 💜 HEROKU GIT: https://git.heroku.com/rg-helper-back.git
+* HEROKU LINK: https://rg-helper-back.herokuapp.com/
+* HEROKU GIT: https://git.heroku.com/rg-helper-back.git
+* HEROKU push: `git push heroku main`
 
-#### Start: `yarn dev` 
+* Start local server (development mode): `yarn dev` 
 
 ## 🌠 Per aspera ad astra ⭐ 
 
