@@ -4,8 +4,11 @@ import cool from 'cool-ascii-faces'
 import {fileURLToPath} from 'url';
 import dotenv from 'dotenv'
 import Pool from "pg-pool";
+import cors from 'cors'
 
 dotenv.config()
+const app = express()
+app.use(cors())
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 5000;
