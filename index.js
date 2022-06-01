@@ -1,52 +1,87 @@
-import chalk from "chalk";
-import os from "os";
-import dotenv from "dotenv";
-import express from 'express'
-import cors from 'cors'
-import users from "./usersRouter.js";
-import bodyParser from 'body-parser'
+import express from "express";
+import path, {dirname} from "path";
+import cool from 'cool-ascii-faces'
+import {fileURLToPath} from 'url';
 
-// connect ro database (MongoDB)
-// main().catch(err => console.log(err))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const PORT = process.env.PORT || 5000;
+
+express()
+    .use(express.static(path.join(__dirname, 'public')))
+    .set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .get('/', (req, res) => {
+        res.write(`<h1>HOME PAGE</h1>`)
+        res.end()
+    })
+    .get('/tasks', (req, res) => {
+        res.write('TASKS')
+        res.end()
+    })
+    .get('/cool', (req, res) => {
+        res.send(cool())
+        res.end()
+    })
+    .get('/*', (req, res) => {
+        res.send(`<h1>404 not found</h1>`)
+        res.end()
+    })
+    .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+
+// example (old code): todo: need delete in future
+
+// import chalk from "chalk";
+// import os from "os";
+// import dotenv from "dotenv";
+// import express from 'express'
+// import cors from 'cors'
+// import users from "./usersRouter.js";
+// import bodyParser from 'body-parser'
+// import mongoose from "mongoose";
 //
+// // params
+// dotenv.config()
+// const port = 8888
+// const app = express()
+// app.use(bodyParser.urlencoded({extended: false}))
+// app.use(bodyParser.json())
+// app.use(cors())
+//
+// // connect ro database
 // async function main() {
 //     await mongoose.connect('mongodb://localhost:27017/patients');
 // }
-
-// params
-dotenv.config()
-const port = process.env.PORT || 8888
-const app = express()
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
-app.use(cors())
-
-// routers
-app.use('/users', users)
-app.get('/', async (req, res) => {
-    res.send(`<h1>HOME PAGE</h1>`)
-})
-app.get('/tasks', async (req, res) => {
-    res.send('TASKS')
-})
-
-// default
-app.use(async (req, res) => {
-    res.send('404 NOT FOUND')
-})
-
-console.clear()
-console.log(chalk.greenBright('===== SERVER STARTED ====='))
-console.log(chalk.blueBright('PROCESS №:', chalk.cyanBright(process.pid)))
-console.log(chalk.blueBright('PORT:'), chalk.cyanBright(process.env.PORT))
-console.log(chalk.blueBright('MODE:'), chalk.cyanBright(process.env.NODE_ENV))
-console.log(chalk.blueBright('OS:'), chalk.cyanBright(os.platform()))
-console.log(chalk.blueBright("CPU's"), chalk.cyanBright(os.cpus().length))
-
-app.listen(port, () => {
-    console.log(chalk.greenBright(`===== SERVER IS RUNNING... =====`))
-})
-
-
+//
+// main().catch(err => console.log(err))
+//
+//
+// // routers
+// app.use('/users', users)
+// app.get('/', async (req, res) => {
+//     res.send(`<h1>HOME PAGE</h1>`)
+// })
+// app.get('/tasks', async (req, res) => {
+//     res.send('TASKS')
+// })
+//
+// // default
+// app.use(async (req, res) => {
+//     res.send('404 NOT FOUND')
+// })
+//
+// console.clear()
+// console.log(chalk.greenBright('===== SERVER STARTED ====='))
+// console.log(chalk.blueBright('PROCESS №:', chalk.cyanBright(process.pid)))
+// console.log(chalk.blueBright('PORT:'), chalk.cyanBright(port))
+// console.log(chalk.blueBright('OS:'), chalk.cyanBright(os.platform()))
+// console.log(chalk.blueBright("CPU's"), chalk.cyanBright(os.cpus().length))
+//
+// app.listen(port, () => {
+//     console.log(chalk.greenBright(`===== SERVER IS RUNNING... =====`))
+// })
+//
+//
 
 

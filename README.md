@@ -5,6 +5,7 @@
 * HEROKU push: `git push heroku main`
 
 * Start local server (development mode): `yarn dev` 
+* **PORT**: 8888
 
 ## 🌠 Per aspera ad astra ⭐ 
 
