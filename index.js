@@ -10,13 +10,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.HEROKU_POSTGRESQL_AQUA_URL,
     ssl: {
         rejectUnauthorized: false
     }
 });
-
-console.log(process.env.DATABASE_URL)
 
 express()
     .use(express.static(path.join(__dirname, 'public')))
@@ -26,6 +24,19 @@ express()
     .get('/', (req, res) => {
         res.write(`<h1>HOME PAGE</h1>`)
         res.end()
+    })
+    .get('/db', async (req, res) => {
+        try {
+            const client = await pool.connect();
+            const result = await client.query('SELECT * FROM test_table');
+            const results = {'results': (result) ? result.rows : null};
+            // res.render('pages/db', results);
+            res.send(results)
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
     })
     .get('/tasks', (req, res) => {
         res.send('TASKS')
@@ -38,18 +49,6 @@ express()
     .get('/times', (req, res) => {
         res.send(showTimes())
         res.end()
-    })
-    .get('/db', async (req, res) => {
-        try {
-            const client = await pool.connect();
-            const result = await client.query('SELECT * FROM test_table');
-            const results = {'results': (result) ? result.rows : null};
-            res.render('pages/db', results);
-            client.release();
-        } catch (err) {
-            console.error(err);
-            res.send("Error " + err);
-        }
     })
     .get('/*', (req, res) => {
         res.send(`<h1>404 not found</h1>`)
