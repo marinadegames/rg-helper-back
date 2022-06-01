@@ -7,8 +7,7 @@ import Pool from "pg-pool";
 import cors from 'cors'
 
 dotenv.config()
-const app = express()
-app.use(cors())
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 5000;
@@ -20,6 +19,7 @@ const pool = new Pool({
 });
 
 express()
+    .use(cors())
     .use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
