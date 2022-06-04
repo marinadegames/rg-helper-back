@@ -52,8 +52,20 @@ express()
         res.send(`<h1>404 not found</h1>`)
         res.end()
     })
-    .delete('/:id', (req, res) => {
+    .delete('/:id', async (req, res) => {
         console.log('HEY!!!', req.params.id)
+        try {
+            const client = await pool.connect();
+            const result = await client.query(`DELETE FROM people WHERE id = ${req.params.id}`);
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+
+
         res.end()
     })
     .listen(PORT, () => {
