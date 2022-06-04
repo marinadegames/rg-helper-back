@@ -52,6 +52,10 @@ express()
         res.send(`<h1>404 not found</h1>`)
         res.end()
     })
+    .delete('/:id', (req, res) => {
+        console.log('HEY!!!', req.params.id)
+        res.end()
+    })
     .listen(PORT, () => {
         console.log(`Listening on ${PORT}`)
     })
