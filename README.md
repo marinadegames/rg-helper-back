@@ -19,8 +19,6 @@
 
 ```
 
-*
-
 ## 🌠 Per aspera ad astra ⭐ 
 
 
