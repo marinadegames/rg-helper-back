@@ -9,15 +9,8 @@
 
 ### 🔗 API:
 
-#### 👥 users:
-
-* `GET`: get all users  
-  response:
-
-```JS
-    let response = {}
-
-```
+#### 👥 users:  
+* `GET`: get all users
 
 ## 🌠 Per aspera ad astra ⭐ 
 
