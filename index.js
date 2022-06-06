@@ -5,6 +5,7 @@ import {fileURLToPath} from 'url';
 import dotenv from 'dotenv'
 import Pool from "pg-pool";
 import cors from 'cors'
+import chalk from "chalk";
 
 dotenv.config()
 const __filename = fileURLToPath(import.meta.url);
@@ -70,6 +71,8 @@ app.delete('/:id', async (req, res) => {
     }
     res.end()
 })
+
+
 app.post('/db', async (req, res) => {
     try {
         let newName = req.body.name
@@ -84,7 +87,43 @@ app.post('/db', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.send("Error " + err);
+    } finally {
+        res.end()
     }
-    res.end()
+
+})
+app.put('/db/:id', async (req, res) => {
+
+    console.log(chalk.blueBright("========================="))
+    console.log(chalk.blueBright("YOU'RE HERE!"))
+    console.log(chalk.blueBright("========================="))
+    try {
+        let userId = req.params.id
+        let user = req.body.user
+        console.log(req.body.user)
+        console.log('USER ID: ', userId)
+
+        const client = await pool.connect();
+        const result = await client.query(
+            `UPDATE people
+            SET
+            name = '${user.name}', 
+            bio = '${user.bio}',
+            birth = ${user.birth},
+            email = '${user.email}', 
+            covid = ${user.covid} 
+            WHERE id = ${userId}
+            `);
+        const results = {'results': (result) ? result.rows : null};
+        res.send(results)
+        console.log('EDIT USER:', req.body.user.name)
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    } finally {
+        res.end()
+    }
+
 })
 
