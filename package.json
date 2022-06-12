@@ -7,15 +7,13 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
-    "ejs": "^3.1.8",
-    "env": "^0.0.2",
     "express": "^4.18.1",
     "heroku": "^7.60.2",
     "pg": "^8.7.3",
     "pg-pool": "^3.5.1"
   },
   "scripts": {
-    "start": "SET PORT=5000 node index.js",
+    "start": "node index.js",
     "dev": "nodemon index.js --inspect",
     "heroku": "heroku local"
   },
