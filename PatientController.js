@@ -65,6 +65,26 @@ class PatientController {
         res.send(`<h1>404 not found</h1>`)
         res.end()
     }
+
+    async postNewPatient(req, res) {
+        try {
+            const newPatient = req.body
+            const client = await pool.connect();
+            console.log(newPatient)
+            const result = await client.query(
+                `
+                INSERT INTO patients (name, birthyear, sex, address, dateres)
+                VALUES ("${newPatient.name}", "${newPatient.year}", "${newPatient.sex}", "${newPatient.address}", CURRENT_TIMESTAMP);
+                `
+            );
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
 }
 
 export default new PatientController();

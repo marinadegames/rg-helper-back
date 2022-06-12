@@ -34,3 +34,5 @@ app.get('/patients', router)
 app.get('/patients/:id', router)
 app.get('/patients/researches/:id', router)
 app.get('/*', router)
+
+app.post('/patients', router)
