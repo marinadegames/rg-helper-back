@@ -1,4 +1,5 @@
 import {pool} from "./index.js";
+import chalk from "chalk";
 
 class PatientController {
     async home(req, res) {
@@ -10,18 +11,19 @@ class PatientController {
         try {
             const client = await pool.connect();
             const result = await client.query(
-                `SELECT
+                `
+                 SELECT
                 patients.id,
                 patients.dateres,
                 patients.name,
                 patients.birthyear,
                 patients.sex,
                 patients.address,
-                (SELECT jsonb_agg(idres) FROM researches WHERE researches.idpatient = patients.resid),
+                 (SELECT jsonb_agg(idres) FROM researches WHERE researches.idpatient = patients.id),
                 patients.description,
                 patients.conclusion
                 FROM researches
-                INNER JOIN patients ON patients.resid = researches.idres;
+                INNER JOIN patients ON patients.id = researches.idres;
                 `);
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
@@ -70,13 +72,33 @@ class PatientController {
         try {
             const newPatient = req.body
             const client = await pool.connect();
-            console.log(newPatient)
             const result = await client.query(
                 `
                 INSERT INTO patients (name, birthyear, sex, address, dateres)
-                VALUES ("${newPatient.name}", "${newPatient.year}", "${newPatient.sex}", "${newPatient.address}", CURRENT_TIMESTAMP);
+                VALUES ('${newPatient.name}', '${newPatient.year}', '${newPatient.sex}', '${newPatient.address}', CURRENT_TIMESTAMP);
                 `
             );
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
+
+    async postNewResearches(req, res) {
+        try {
+            const newResearches = req.body
+            const client = await pool.connect();
+            const exp = newResearches.res.map(res => {
+                return `('${res.typeres}', '${res.sizefilm}', '${res.amount}', '${res.projections}', '${res.dose}', '${res.idpatient}')`
+            })
+            const expSQL = 'INSERT INTO researches ' +
+                '(typeres, sizefilm, amount, projections, dose, idpatient) ' +
+                'VALUES ' + exp.toString() + ';'
+            console.log(chalk.cyan(expSQL))
+            const result = await client.query(expSQL);
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
             client.release();

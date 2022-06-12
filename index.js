@@ -5,6 +5,7 @@ import Pool from "pg-pool";
 import cors from 'cors'
 import router from "./router.js";
 import * as dotenv from "dotenv";
+import chalk from "chalk";
 
 dotenv.config()
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +19,10 @@ export const pool = new Pool({
 
 const app = express()
 app.listen(PORT, () => {
-    console.log(`Listening on ${PORT}`)
+    console.group(chalk.greenBright('===================================='))
+    console.log(chalk.greenBright(`======= START SERVER ON PORT ${PORT} =======`))
+    console.log(chalk.greenBright('===================================='))
+    console.groupEnd()
 })
 
 app.use(cors())
@@ -36,3 +40,4 @@ app.get('/patients/researches/:id', router)
 app.get('/*', router)
 
 app.post('/patients', router)
+app.post('/patients/researches', router)

@@ -10,5 +10,6 @@ router.get('/patients/researches/:id', PatientController.getTargetResearchesPati
 router.get('/*', PatientController.notFound)
 
 router.post('/patients', PatientController.postNewPatient)
+router.post('/patients/researches', PatientController.postNewResearches)
 
 export default router
