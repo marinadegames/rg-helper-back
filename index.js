@@ -44,3 +44,4 @@ app.post('/patients/researches', router)
 
 app.put('/patients/:id/changeName', router)
 app.put('/patients/:id/changeYear', router)
+app.put('/patients/:id/changeSex', router)

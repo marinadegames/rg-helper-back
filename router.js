@@ -14,4 +14,5 @@ router.post('/patients/researches', PatientController.postNewResearches)
 
 router.put('/patients/:id/changeName', PatientController.putEditPatientName)
 router.put('/patients/:id/changeYear', PatientController.putEditPatientYear)
+router.put('/patients/:id/changeSex', PatientController.putEditPatientSex)
 export default router
