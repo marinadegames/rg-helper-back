@@ -131,6 +131,23 @@ class PatientController {
             res.send("Error " + err);
         }
     }
+
+    async putEditPatientYear(req, res) {
+        try {
+            const patientId = req.params.id
+            const newYear = req.body.year
+            console.log(req.body)
+            const client = await pool.connect();
+            const result = await client.query(`UPDATE patients SET birthyear = '${newYear}' WHERE id = ${patientId};`);
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            res.status(400)
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
 }
 
 export default new PatientController();

@@ -42,4 +42,5 @@ app.get('/*', router)
 app.post('/patients', router)
 app.post('/patients/researches', router)
 
-app.put('/patients/:id', router)
+app.put('/patients/:id/changeName', router)
+app.put('/patients/:id/changeYear', router)
