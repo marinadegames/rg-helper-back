@@ -12,7 +12,7 @@ class PatientController {
             const client = await pool.connect();
             const result = await client.query(
                 `
-                 SELECT
+                SELECT
                 patients.id,
                 patients.dateres,
                 patients.name,
@@ -22,8 +22,7 @@ class PatientController {
                  (SELECT jsonb_agg(idres) FROM researches WHERE researches.idpatient = patients.id),
                 patients.description,
                 patients.conclusion
-                FROM researches
-                INNER JOIN patients ON patients.id = researches.idres;
+                FROM patients;
                 `);
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
