@@ -163,6 +163,22 @@ class PatientController {
             res.send("Error " + err);
         }
     }
+
+    async putEditPatientAddress(req, res) {
+        try {
+            const patientId = req.params.id
+            const newAddress = req.body.address
+            const client = await pool.connect();
+            const result = await client.query(`UPDATE patients SET address = '${newAddress}' WHERE id = ${patientId};`);
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            res.status(400)
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
 }
 
 export default new PatientController();
