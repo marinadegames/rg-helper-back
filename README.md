@@ -9,25 +9,7 @@
 * Open heroku URL: `heroku open`
 * **PORT**: `5000`
 
-## 🔗 API:
 
-### 👥 /patients:
-
-#### `GET`: get all patients  
-response:
-* status: `number`
-* statusText: `string`
-* items: `Array of PatientType`
-* items: `PatientType`
-    * id: `integer (number)`
-    * name: `string`
-    * birthyear: {year: `number | null`}
-    * sex: `MAN` | `WOMAN`
-    * address: `string` | `null`
-    * resid: `Array[number `(link to research)`]`
-    * description: `string` | `null`
-    * conclusion: `string` | `null`
-    * dateres: `Date` (unix format)
 ## 🌠 Per aspera ad astra ⭐ 
 
 
