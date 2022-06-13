@@ -22,12 +22,14 @@ class PatientController {
                  (SELECT jsonb_agg(idres) FROM researches WHERE researches.idpatient = patients.id),
                 patients.description,
                 patients.conclusion
-                FROM patients;
+                FROM patients
+                ORDER BY patients.id;
                 `);
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
             client.release();
         } catch (err) {
+            res.status(400)
             console.error(err);
             res.send("Error " + err);
         }
@@ -43,6 +45,7 @@ class PatientController {
             res.send(results)
             client.release();
         } catch (err) {
+            res.status(400)
             console.error(err);
             res.send("Error " + err);
         }
@@ -57,6 +60,7 @@ class PatientController {
             res.send(results)
             client.release();
         } catch (err) {
+            res.status(400)
             console.error(err);
             res.send("Error " + err);
         }
@@ -64,6 +68,7 @@ class PatientController {
 
     async notFound(req, res) {
         res.send(`<h1>404 not found</h1>`)
+        res.status(400)
         res.end()
     }
 
@@ -81,6 +86,7 @@ class PatientController {
             res.send(results)
             client.release();
         } catch (err) {
+            res.status(400)
             console.error(err);
             res.send("Error " + err);
         }
@@ -102,6 +108,25 @@ class PatientController {
             res.send(results)
             client.release();
         } catch (err) {
+            res.status(400)
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
+
+    async putEditPatientName(req, res) {
+        try {
+            const patientId = req.params.id
+            const newName = req.body.name
+            console.log(typeof req.body.name)
+            console.log(req.body)
+            const client = await pool.connect();
+            const result = await client.query(`UPDATE patients SET name = '${newName}' WHERE id = ${patientId};`);
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            res.status(400)
             console.error(err);
             res.send("Error " + err);
         }
