@@ -34,6 +34,7 @@ class PatientController {
             res.send("Error " + err);
         }
     }
+
     async getAllResearches(req, res) {
         try {
             const client = await pool.connect();
@@ -47,6 +48,7 @@ class PatientController {
             res.send("Error " + err);
         }
     }
+
     async getTargetPatient(req, res) {
         try {
             const id = req.params.id
@@ -62,7 +64,6 @@ class PatientController {
             res.send("Error " + err);
         }
     }
-
 
     async getTargetResearchesPatient(req, res) {
         try {
@@ -196,13 +197,26 @@ class PatientController {
     async putEditResearches(req, res) {
         try {
             console.log('yes')
-            const newResearches = req.body.researches
+            const idPatient = req.params.idPat
+            const newResearches = req.body.allResearches
             const client = await pool.connect();
             console.log(newResearches)
+            console.log(idPatient)
 
-            // const result = await client.query(`UPDATE patients SET address = '${newAddress}' WHERE id = ${patientId};`);
-            // const results = {'results': (result) ? result.rows : null};
-            res.send('HEY')
+            const expSQL = newResearches.map(res => {
+                return `UPDATE researches
+                SET
+                typeres = '${res.typeres}',
+                sizefilm = '${res.sizefilm}',
+                amount = ${res.amount},
+                projections = ${res.projections},
+                dose = ${res.dose}
+                WHERE idres = ${res.idres};`
+            })
+            console.log(expSQL.join(' '))
+            const result = await client.query(expSQL.join(' '));
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
             client.release();
         } catch (err) {
             res.status(400)
