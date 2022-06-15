@@ -196,12 +196,8 @@ class PatientController {
 
     async putEditResearches(req, res) {
         try {
-            console.log('yes')
-            const idPatient = req.params.idPat
             const newResearches = req.body.allResearches
             const client = await pool.connect();
-            console.log(newResearches)
-            console.log(idPatient)
 
             const expSQL = newResearches.map(res => {
                 return `UPDATE researches
@@ -213,7 +209,6 @@ class PatientController {
                 dose = ${res.dose}
                 WHERE idres = ${res.idres};`
             })
-            console.log(expSQL.join(' '))
             const result = await client.query(expSQL.join(' '));
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
