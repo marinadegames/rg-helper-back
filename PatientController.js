@@ -34,7 +34,19 @@ class PatientController {
             res.send("Error " + err);
         }
     }
-
+    async getAllResearches(req, res) {
+        try {
+            const client = await pool.connect();
+            const result = await client.query(`SELECT * FROM researches;`);
+            const results = {'results': (result) ? result.rows : null};
+            res.send(results)
+            client.release();
+        } catch (err) {
+            res.status(400)
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
     async getTargetPatient(req, res) {
         try {
             const id = req.params.id
@@ -50,6 +62,7 @@ class PatientController {
             res.send("Error " + err);
         }
     }
+
 
     async getTargetResearchesPatient(req, res) {
         try {
@@ -172,6 +185,24 @@ class PatientController {
             const result = await client.query(`UPDATE patients SET address = '${newAddress}' WHERE id = ${patientId};`);
             const results = {'results': (result) ? result.rows : null};
             res.send(results)
+            client.release();
+        } catch (err) {
+            res.status(400)
+            console.error(err);
+            res.send("Error " + err);
+        }
+    }
+
+    async putEditResearches(req, res) {
+        try {
+            console.log('yes')
+            const newResearches = req.body.researches
+            const client = await pool.connect();
+            console.log(newResearches)
+
+            // const result = await client.query(`UPDATE patients SET address = '${newAddress}' WHERE id = ${patientId};`);
+            // const results = {'results': (result) ? result.rows : null};
+            res.send('HEY')
             client.release();
         } catch (err) {
             res.status(400)
